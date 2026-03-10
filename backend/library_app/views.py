@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 
@@ -58,6 +59,42 @@ def list_categories(request):
 
     return Response(
         serializer.data,
+        status=200
+    )
+
+@api_view(["PUT"])
+def update_category(request,id):
+    category=get_object_or_404(Category,id=id)
+    name=request.data.get("name")
+    status=request.data.get("status","1")
+
+    is_active =True if str(status)=="1" else False 
+
+    category.name=name
+    category.is_active=is_active
+    category.save()
+    serializer=CategorySerializer(category)
+
+    return Response(
+        {
+            "success":True,
+            "message":"Category has been updated 👌",
+            "category":serializer.data,
+        },
+        status=200
+    )
+
+
+@api_view(["DELETE"])
+def delete_category(request,id):
+    category=get_object_or_404(Category,id=id)
+    category.delete()
+
+    return Response(
+        {
+            "success":True,
+            "message":"Category has been deleted successfully 😍",
+        },
         status=200
     )
 

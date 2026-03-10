@@ -70,7 +70,7 @@ function Header() {
                                                     Add Category</Link>
                                             </li>
                                             <li>
-                                                <Link className="dropdown-item" to="/admin/add_Category">
+                                                <Link className="dropdown-item" to="/admin/manage_Category">
                                                     <i className='fa-solid fa-list me-1' />
                                                     Manage Category</Link>
                                             </li>
@@ -100,7 +100,7 @@ function Header() {
                                     </li>
                                     <li className="nav-item dropdown">
                                         <button className='nav-link dropdown-toggle btn btn-link' data-bs-toggle="dropdown">
-                                            <i className='fa-solid fa-books me-1' />
+                                            <i className='fa-solid fa-book me-1' />
                                             Books
                                         </button>
                                         <ul className='dropdown-menu dropdown-menu-end'>
@@ -130,7 +130,7 @@ function Header() {
                                     </li>
                                     <li className="nav-item">
                                         <Link className={`nav-link ${isActive("/user/signup")}`} to="/admin/dashboard">
-                                            <i className='fa-solid fa-gauge-high me-1' />
+                                            <i className='fa-solid fa-user-graduate me-1' />
                                             Students</Link>
                                     </li>
                                     <li className="nav-item">
