@@ -9,6 +9,7 @@ import AddCategory from './pages/AddCategory'
 import ManageCategories from './pages/ManageCategories'
 import AddAuthor from './pages/AddAuthor'
 import ManageAuthors from './pages/ManageAuthors'
+import AddBook from './pages/AddBook'
 const App = () => {
   return (
     <>
@@ -21,6 +22,7 @@ const App = () => {
       <Route path='/admin/manage_Category' element={<ManageCategories/>}/>
       <Route path='/admin/add_Author' element={<AddAuthor/>}/>
       <Route path='/admin/manage_Author' element={<ManageAuthors/>}/>
+      <Route path='/admin/add_Book' element={<AddBook/>}/>
     </Routes>
     </>
   )

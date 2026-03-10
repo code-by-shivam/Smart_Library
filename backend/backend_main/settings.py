@@ -119,3 +119,6 @@ CSRT_TRUSTED_ORIGINS=[
     "https://localhost:5173",
 ]
  
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
