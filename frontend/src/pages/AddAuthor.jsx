@@ -3,11 +3,10 @@ import axios from 'axios'
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
 
-function AddCategory() {
+function AddAuthor() {
     const [name, setName] = useState("")
-    const [status, setStatus] = useState("1")
+    const [authors, setAuthors] = useState([])
     const [loading, setLoading] = useState(false)
-    const [categories, setCategories] = useState([])
     const navigate = useNavigate();
 
     const adminUser = localStorage.getItem("adminUser");
@@ -17,17 +16,17 @@ function AddCategory() {
             navigate("/admin/login")
         }
         else {
-            fetchCategories();
+            fetchAuthors ();
         }
     }, [])
 
-    const fetchCategories = async () => {
+    const fetchAuthors = async () => {
         try {
-            const res = await axios.get("http://127.0.0.1:8000/api/categories/");
-            setCategories(res.data);
+            const res = await axios.get("http://127.0.0.1:8000/api/admin/authors/");
+            setAuthors(res.data);
         }
         catch (err) {
-            toast.error("Failed to load Categories 😒 ")
+            toast.error("Failed to load Authors 😒 ")
         }
     }
 
@@ -36,15 +35,14 @@ function AddCategory() {
         setLoading(true)
 
         try {
-            const res = await axios.post("http://127.0.0.1:8000/api/admin/add-Category/", { name, status });
+            const res = await axios.post("http://127.0.0.1:8000/api/admin/add-author/", { name });
             if (res.data.success) {
-                toast.success(res.data.message || "Category Created 👌")
+                toast.success(res.data.message || "Author Created 👌")
                 setName("")
-                setStatus("1")
-                fetchCategories();
+                fetchAuthors();
             }
             else {
-                toast.error(res.data.message || "Failed to create Category 😒")
+                toast.error(res.data.message || "Failed to create Author 😒")
             }
         }
         catch (err) {
@@ -71,18 +69,18 @@ function AddCategory() {
                     <div className='row justify-content-center mb-4'>
                         <div className='col-lg-9 text-center'>
                             <h4 className='fw-bold mb-2'>
-                                <i className='fa-solid fa-layer-group text-primary me-2'></i>
-                                Add Category
+                                <i className='fa-solid fa-user-pen text-primary me-2'></i>
+                                Add Author
                             </h4>
                             <p className='text-muted small mb-0'>
-                                Create new book categories and manage their active status
+                                Create new book authors and manage their information from this page.
                             </p>
                         </div>
                     </div>
 
                     <div className='row g-4'>
 
-                        {/* Add Category Form */}
+                        {/* Add Author Form */}
                         <div className='col-md-4'>
                             <div className='card border-0 shadow-sm rounded-4 h-60'>
                                 <div className='card-body p-4 d-flex flex-column'>
@@ -91,60 +89,18 @@ function AddCategory() {
 
                                         <div className='mb-3'>
                                             <label className='form-label small fw-semibold mb-1'>
-                                                Category Name
+                                                Author Name
                                             </label>
                                             <input
                                                 type="text"
                                                 className='form-control form-control-sm'
-                                                placeholder='Enter Category Name'
+                                                placeholder='Enter Author Name'
                                                 required
                                                 value={name}
                                                 onChange={(e) => setName(e.target.value)}
                                             />
                                         </div>
 
-                                        <div className='mb-4'>
-                                            <label className='form-label small fw-semibold mb-1'>
-                                                Status
-                                            </label>
-                                            <div className='d-flex gap-3 mt-1'>
-                                                <div className='form-check mb-0'>
-                                                    <input
-                                                        type="radio"
-                                                        className='form-check-input'
-                                                        value="1"
-                                                        id='status-active'
-                                                        name="status"
-                                                        checked={status === "1"}
-                                                        onChange={(e) => setStatus(e.target.value)}
-                                                    />
-                                                    <label
-                                                        className="form-check-label small"
-                                                        htmlFor="status-active"
-                                                    >
-                                                        Active
-                                                    </label>
-                                                </div>
-
-                                                <div className='form-check mb-0'>
-                                                    <input
-                                                        type="radio"
-                                                        className='form-check-input'
-                                                        value="0"
-                                                        id='status-inactive'
-                                                        name="status"
-                                                        checked={status === "0"}
-                                                        onChange={(e) => setStatus(e.target.value)}
-                                                    />
-                                                    <label
-                                                        className="form-check-label small"
-                                                        htmlFor="status-inactive"
-                                                    >
-                                                        Inactive
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div className='mt-auto'>
                                             <button
@@ -155,12 +111,12 @@ function AddCategory() {
                                                 {loading ? (
                                                     <>
                                                         <span className='spinner-border spinner-border-sm me-2' role='status' aria-hidden='true'></span>
-                                                        Creating...
+                                                        Adding...
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <i className='fa-solid fa-plus me-2'></i>
-                                                        Create Category
+                                                        <i className='fa-solid fa-user-plus me-2'></i>
+                                                        Add Author
                                                     </>
                                                 )}
                                             </button>
@@ -178,13 +134,13 @@ function AddCategory() {
                                 <div className='card-body p-4'>
 
                                     <h6 className='fw-semibold mb-3'>
-                                        Existing Categories
+                                        Existing Authors
                                     </h6>
 
-                                    {categories.length === 0 ? (
+                                    {authors.length === 0 ? (
                                         <div className='d-flex align-items-center justify-content-center py-4'>
                                             <p className='text-muted small mb-0'>
-                                                No category found. Add your first category from the form.
+                                                No author found. Add your first author from the form.
                                             </p>
                                         </div>
                                     ) : (
@@ -194,34 +150,24 @@ function AddCategory() {
                                                     <tr>
                                                         <th style={{ width: '48px' }}>#</th>
                                                         <th>Name</th>
-                                                        <th style={{ width: '100px' }}>Status</th>
+                                                
                                                         <th style={{ width: '110px' }}>Created</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {categories.map((cat, index) => (
-                                                        <tr key={cat.id}>
+                                                    {authors.map((author, index) => (
+                                                        <tr key={author.id}>
 
                                                             <td className='text-muted'>{index + 1}</td>
 
                                                             <td className='fw-medium'>
-                                                                {cat.name}
+                                                                {author.name}
                                                             </td>
 
-                                                            <td>
-                                                                {cat.is_active ? (
-                                                                    <span className='badge bg-success-subtle text-success border border-success px-2 py-1'>
-                                                                        Active
-                                                                    </span>
-                                                                ) : (
-                                                                    <span className='badge bg-secondary-subtle text-secondary border border-secondary px-2 py-1'>
-                                                                        Inactive
-                                                                    </span>
-                                                                )}
-                                                            </td>
+                                                    
 
                                                             <td className='text-muted'>
-                                                                {new Date(cat.created_at).toLocaleDateString()}
+                                                                {new Date(author.created_at).toLocaleDateString()}
                                                             </td>
 
                                                         </tr>
@@ -243,4 +189,4 @@ function AddCategory() {
     )
 }
 
-export default AddCategory
+export default AddAuthor

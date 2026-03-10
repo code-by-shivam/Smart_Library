@@ -85,12 +85,12 @@ function Header() {
                                         </button>
                                         <ul className='dropdown-menu dropdown-menu-end'>
                                             <li>
-                                                <Link className="dropdown-item" to="/admin/add_Category">
+                                                <Link className="dropdown-item" to="/admin/add_Author">
                                                     <i className='fa-solid fa-plus me-1' />
                                                     Add Author</Link>
                                             </li>
                                             <li>
-                                                <Link className="dropdown-item" to="/admin/add_Category">
+                                                <Link className="dropdown-item" to="/admin/manage_Author">
                                                     <i className='fa-solid fa-list me-1' />
                                                     Manage Author</Link>
                                             </li>

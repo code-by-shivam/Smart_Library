@@ -98,3 +98,64 @@ def delete_category(request,id):
         status=200
     )
 
+
+@api_view(["POST"])
+def add_author(request):
+    name=request.data.get("name")
+
+
+    author=Author.objects.create(name=name)
+    serializer=AuthorSerializer(author)
+
+    return Response(
+        {
+            "success":True,
+            "message":"Author has been Created 👌",
+            "author":serializer.data,
+        },
+        status=201
+    )
+
+
+@api_view(["GET"])
+def list_authors(request):
+    authors = Author.objects.all().order_by("-id")
+    serializer=AuthorSerializer(authors,many=True)
+
+    return Response(
+        serializer.data,
+        status=200
+    )
+
+
+@api_view(["PUT"])
+def update_author(request,id):
+    author=get_object_or_404(Author,id=id)
+    name=request.data.get("name")
+
+    author.name=name
+    author.save()
+    serializer=AuthorSerializer(author)
+
+    return Response(
+        {
+            "success":True,
+            "message":"Author has been updated 👌",
+            "author":serializer.data,
+        },
+        status=200
+    )
+
+
+@api_view(["DELETE"])
+def delete_author(request,id):
+    author=get_object_or_404(Author,id=id)
+    author.delete()
+
+    return Response(
+        {
+            "success":True,
+            "message":"Author has been deleted successfully 😍",
+        },
+        status=200
+    )
