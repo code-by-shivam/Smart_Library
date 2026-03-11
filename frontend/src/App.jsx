@@ -10,6 +10,7 @@ import ManageCategories from './pages/ManageCategories'
 import AddAuthor from './pages/AddAuthor'
 import ManageAuthors from './pages/ManageAuthors'
 import AddBook from './pages/AddBook'
+import ManageBooks from './pages/ManageBooks'
 const App = () => {
   return (
     <>
@@ -23,6 +24,7 @@ const App = () => {
       <Route path='/admin/add_Author' element={<AddAuthor/>}/>
       <Route path='/admin/manage_Author' element={<ManageAuthors/>}/>
       <Route path='/admin/add_Book' element={<AddBook/>}/>
+      <Route path='/admin/manage_Book' element={<ManageBooks/>}/>
     </Routes>
     </>
   )

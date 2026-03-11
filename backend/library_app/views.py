@@ -1,10 +1,10 @@
 from django.contrib.auth import authenticate
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
 from django.shortcuts import get_object_or_404
-# Create your views here.
+from rest_framework.parsers import MultiPartParser, FormParser # Create your views here.
 
 
 @api_view(["POST"])
@@ -159,3 +159,110 @@ def delete_author(request,id):
         },
         status=200
     )
+
+
+@api_view(["POST"])
+@parser_classes([MultiPartParser, FormParser])   # to handle file uploads and form data in the same request  
+def add_book(request):
+    title=request.data.get("title")
+    author_id=request.data.get("author_id")
+    category_id=request.data.get("category_id")
+    isbn=request.data.get("isbn")
+    price=request.data.get("price")
+    quantity=request.data.get("quantity")
+    cover_image=request.FILES.get("cover_image")
+
+    author=Author.objects.get(id=author_id)
+    category=Category.objects.get(id=category_id)
+   
+    if Book.objects.filter(isbn=isbn).exists():
+        return Response(
+            {
+                "success":False,
+                "message":"Book with this ISBN already exists 😒"
+            },
+            status=400
+        )
+
+    book=Book.objects.create(
+        title=title,
+        author=author,
+        category=category,
+        isbn=isbn,
+        price=price,
+        quantity=quantity,
+        cover_image=cover_image
+        )
+    
+    serializer=BookSerializer(book) # to serialize the created book instance and include the category_name and author_name in the response
+    
+    return Response(
+        {
+            "success":True,
+            "message":"Book has been Added 👌",
+            "book":serializer.data,
+        },
+        status=201
+    )
+
+
+@api_view(["GET"])
+def list_books(request):    
+    books = Book.objects.all().order_by("-id")
+    serializer=BookSerializer(books,many=True)
+
+    return Response(
+        serializer.data,
+        status=200
+    )
+
+
+@api_view(["PUT"])
+@parser_classes([MultiPartParser, FormParser])   # to handle file uploads and form data in the same request  
+def update_book(request,id):
+    book=get_object_or_404(Book,id=id)
+     
+    title=request.data.get("title")
+    author_id=request.data.get("author")
+    category_id=request.data.get("category")
+    price=request.data.get("price") 
+    quantity=request.data.get("quantity")
+    cover_image=request.FILES.get("cover_image") 
+       
+    author=Author.objects.get(id=author_id)
+    category=Category.objects.get(id=category_id)
+
+
+    book.title=title
+    book.author=author
+    book.category=category
+    book.price=price    
+    book.quantity=quantity
+    if cover_image:
+        book.cover_image=cover_image
+
+    book.save()
+    serializer=BookSerializer(book) # to serialize the updated book instance and include the category_name
+
+    return Response(
+        {   "success":True,
+            "message":"Book has been Updated 👌",
+            "book":serializer.data,
+        },  status=200
+    )
+
+@api_view(["DELETE"])
+def delete_book(request,id):
+    book=get_object_or_404(Book,id=id)
+    book.delete()
+
+    return Response(
+        {
+            "success":True,
+            "message":"Book has been deleted successfully 😍",
+        },
+        status=200
+    )
+
+
+    

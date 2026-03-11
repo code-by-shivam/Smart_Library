@@ -53,13 +53,13 @@ function AddBook() {
 
         const formData = new FormData(); // This is used to send multipart/form-data which can include files(images file in this case)
         formData.append("title", title);
-        formData.append("category", category);
-        formData.append("author", author);
+        formData.append("category_id", category);
+        formData.append("author_id", author);
         formData.append("isbn", isbn);
         formData.append("price", price);
         formData.append("quantity", quantity); 
         if (coverFile) {
-            formData.append("cover", coverFile);
+            formData.append("cover_image", coverFile);
         }
         setLoading(true);
         try {
