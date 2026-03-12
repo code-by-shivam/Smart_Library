@@ -5,7 +5,7 @@ from .models import *
 from .serializers import *
 from django.shortcuts import get_object_or_404
 from rest_framework.parsers import MultiPartParser, FormParser # Create your views here.
-
+from django.contrib.auth.models import User
 
 @api_view(["POST"])
 def admin_login_api(request):
@@ -265,4 +265,57 @@ def delete_book(request,id):
     )
 
 
+@api_view(["POST"])
+def change_password(request):
+    username=request.data.get("username")
+    current_password=request.data.get("current_password")
+    new_password=request.data.get("new_password")
+    confirm_password=request.data.get("confirm_password")
+
+
+    if new_password != confirm_password:
+        return Response(
+            {
+                "success":False,
+                "message":"New password and confirm password do not match 😒"
+            },
+            status=400
+        )
     
+    if len(new_password) < 6:
+        return Response(
+            {
+                "success":False,
+                "message":"New password must be at least 6 characters long 😒"
+            },
+            status=400
+        )
+
+    try:
+        user = User.objects.get(username=username,is_staff=True)
+    except User.DoesNotExist:
+        return Response(
+            {
+                "success":False,
+                "message":"Admin user not found 😒"
+            },
+            status=404
+        )
+    
+    if not user.check_password(current_password):
+        return Response(
+            {
+                "success":False,
+                "message":"Current password is incorrect 😒"
+            },
+            status=400
+        )
+    user.set_password(new_password)
+    user.save()
+    return Response(
+        {
+            "success":True,
+            "message":"Password has been changed successfully 👍"
+        },
+        status=200
+    )

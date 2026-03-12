@@ -54,7 +54,7 @@ function Header() {
                             {adminUser && (
                                 <>
                                     <li className="nav-item">
-                                        <Link className={`nav-link ${isActive("/user/signup")}`} to="/admin/dashboard">
+                                        <Link className={`nav-link ${isActive("/admin/dashboard")}`} to="/admin/dashboard">
                                             <i className='fa-solid fa-gauge-high me-1' />
                                             Dashboard</Link>
                                     </li>
@@ -134,7 +134,7 @@ function Header() {
                                             Students</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className={`nav-link ${isActive("/user/signup")}`} to="/admin/dashboard">
+                                        <Link className={`nav-link ${isActive("/admin/change_password")}`} to="/admin/change_password">
                                             <i className='fa-solid fa-key me-1' />
                                             Change Password</Link>
                                     </li>
