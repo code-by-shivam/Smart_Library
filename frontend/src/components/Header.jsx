@@ -2,11 +2,18 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 function Header() {
     const location = useLocation();
     const adminUser = localStorage.getItem("adminUser");
+    const studentUser = localStorage.getItem("studentUser");
     const navigate = useNavigate();
     const handleLogout = () => {
-    localStorage.removeItem("adminUser");
-    navigate("/admin/login", { replace: true });
-}
+        localStorage.removeItem("adminUser");
+        navigate("/admin/login", { replace: true });
+    }
+
+    const handleStudentLogout = () => {
+        localStorage.removeItem("studentUser");
+        navigate("/user/login", { replace: true });
+    }
+
     const isActive = (path) => {
         return location.pathname === path ? "active text-primary fw-semibold" : "";
     }
@@ -25,7 +32,7 @@ function Header() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                            {!adminUser && (
+                            {!adminUser && !studentUser && (
                                 <>
                                     <li className="nav-item">
                                         <Link className={`nav-link ${isActive("/")}`} to="/">
@@ -140,10 +147,66 @@ function Header() {
                                     </li>
                                     <li className="nav-item">
                                         <button className="btn btn-outline-danger" onClick={handleLogout}>
-    <i className='fa-solid fa-right-from-bracket me-1' />
-    Logout
-</button>
+                                            <i className='fa-solid fa-right-from-bracket me-1' />
+                                            Logout
+                                        </button>
                                     </li>
+
+                                </>
+                            )}
+
+
+                            {studentUser && (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className={`nav-link ${isActive("/user/dashboard")}`} to="/user/dashboard">
+                                            <i className='fa-solid fa-gauge-high me-1' />
+                                           Dashboard</Link>
+                                    </li>
+
+                                      <li className="nav-item">
+                                        <Link className={`nav-link ${isActive("/user/my_library")}`} to="/user/my_library">
+                                            <i className='fa-solid fa-book-open me-1' />
+                                           My Library</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className={`nav-link ${isActive("/user/issued_books")}`} to="/user/issued_books">
+                                            <i className='fa-solid fa-receipt me-1' />
+                                           Issued Book</Link>
+                                    </li>
+                                    <li className="nav-item dropdown">
+                                        <button className='nav-link dropdown-toggle btn btn-link' data-bs-toggle="dropdown">
+                                            <i className='fa-solid fa-circle-user me-1' />
+                                            My Account  
+                                        </button>
+                                        <ul className='dropdown-menu dropdown-menu-end'>
+                                            <li>
+                                                <Link className="dropdown-item" to="/user/profile">
+                                                    <i className='fa-solid fa-id-badge me-1' />
+                                                    Profile</Link>
+                                            </li>
+                                            <li>
+                                                <Link className="dropdown-item" to="/user/change_password">
+                                                    <i className='fa-solid fa-key me-1' />
+                                                    Change Password</Link>
+                                            </li>
+                                            <hr className="dropdown-divider"/>
+                                            <li>
+                                                <button type="button" className="dropdown-item text-danger" onClick={handleStudentLogout}>
+                                                    <i className='fa-solid fa-right-from-bracket me-1' />
+                                                    Logout
+                                                </button>
+                                            </li>
+                                            
+
+                                        </ul>
+
+                                    </li>
+                                    
+                                    
+                
+                                    
+                                    
 
                                 </>
                             )}

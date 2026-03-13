@@ -38,7 +38,8 @@ function UserSignUp() {
         try {
             const res = await axios.post("http://127.0.0.1:8000/api/user/user_signup/",formData);
             if (res.data.success) {
-                toast.success(`Registration successful! Welcome, ${res.data.full_name} 🎉`) ;
+                toast.success(`Registration successful! 🎉 Welcome, ${res.data.full_name}! `);
+                toast.info(`Your Student ID is ${res.data.student_id}.`)
                 setFormData({
                     full_name: "",
                     mobile: "",
@@ -200,7 +201,7 @@ function UserSignUp() {
                                                 )}
                                             </button>
                                             <p className='text-center text-muted small mt-2'>
-                                                Already have an account?
+                                                Already have an account?{' '}
                                                 <Link to='/user/login' className='text-decoration-none'>
                                                     Sign in
                                                 </Link>

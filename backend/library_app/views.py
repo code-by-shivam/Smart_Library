@@ -6,7 +6,7 @@ from .serializers import *
 from django.shortcuts import get_object_or_404
 from rest_framework.parsers import MultiPartParser, FormParser # Create your views here.
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 @api_view(["POST"])
 def admin_login_api(request):
     username=request.data.get("username")
@@ -360,7 +360,7 @@ def user_signup_api(request):
         new_id_int=int(last_student.student_id) + 1
         new_id=str(new_id_int).zfill(5)  # Increment the last student ID and pad with zeros to maintain a 5-digit format
     else:
-        new_id_int= 1
+        new_id_int= 1001
 
     student_id=str(new_id_int)
 
@@ -387,7 +387,60 @@ def user_signup_api(request):
             "success":True,
             "message":"User has been registered successfully 👍",
             "full_name":student.full_name,
+            "student_id":student.student_id,
             
         },
         status=201
     )
+
+
+@api_view(["POST"])
+def user_login_api(request):
+    login_id=request.data.get("login_id")
+    password=request.data.get("password")
+
+
+    try:
+        if '@' in login_id:
+            student = Student.objects.get(email=login_id)
+        else:
+            student = Student.objects.get(student_id=login_id)
+    except Student.DoesNotExist:
+        return Response(
+            {
+                "success":False,
+                "message":"Invalid login ID 😒"
+            },
+            status=401
+        )
+    
+    if not check_password(password,student.password):
+        return Response(
+            {
+                "success":False,
+                "message":"Invalid password 😒"
+            },
+            status=401
+        )
+    
+    if not student.is_active:
+        return Response(
+            {
+                "success":False,
+                "message":"User account in inactive, please contact admin"
+            },
+            status=403,
+        )
+    
+    return Response(
+        {
+            "success":True,
+            "message":"Login successful 👍",
+            "full_name":student.full_name,
+            "student_id":student.student_id,
+        },  
+        status=200
+    )
+    
+
+
