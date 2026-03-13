@@ -6,7 +6,7 @@ from .serializers import *
 from django.shortcuts import get_object_or_404
 from rest_framework.parsers import MultiPartParser, FormParser # Create your views here.
 from django.contrib.auth.models import User
-
+from django.contrib.auth.hashers import make_password
 @api_view(["POST"])
 def admin_login_api(request):
     username=request.data.get("username")
@@ -318,4 +318,76 @@ def change_password(request):
             "message":"Password has been changed successfully 👍"
         },
         status=200
+    )
+
+
+@api_view(["POST"])
+def user_signup_api(request):
+    full_name=request.data.get("full_name")
+    mobile=request.data.get("mobile")
+    email=request.data.get("email")
+    password=request.data.get("password")
+    confirm_password=request.data.get("confirmPassword")
+
+    if password != confirm_password:
+        return Response(
+            {
+                "success":False,
+                "message":"Password and confirm password do not match 😒"
+            },
+            status=400
+        )
+    
+    if len(password) < 6:
+        return Response(
+            {
+                "success":False,
+                "message":"Password must be at least 6 characters long 😒"
+            },
+            status=400
+        )
+    if not mobile.isdigit() or len(mobile) < 10:
+        return Response(
+            {
+                "success":False,
+                "message":"Invalid mobile number 😒"
+            },
+            status=400
+        )
+    
+    last_student=Student.objects.all().order_by("-id").first()
+    if last_student and last_student.student_id.isdigit():
+        new_id_int=int(last_student.student_id) + 1
+        new_id=str(new_id_int).zfill(5)  # Increment the last student ID and pad with zeros to maintain a 5-digit format
+    else:
+        new_id_int= 1
+
+    student_id=str(new_id_int)
+
+    if Student.objects.filter(email=email).exists():
+        return Response(
+            {
+                "success":False,
+                "message":"User with this email already exists 😒"
+            },
+            status=400
+        )
+    
+    hashed_password=make_password(password)
+    student=Student.objects.create(
+        student_id=student_id,
+        full_name=full_name,
+        email=email,
+        mobile=mobile,
+        password=hashed_password,
+        is_active=True
+    )
+    return Response(
+        {
+            "success":True,
+            "message":"User has been registered successfully 👍",
+            "full_name":student.full_name,
+            
+        },
+        status=201
     )

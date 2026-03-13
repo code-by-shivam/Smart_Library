@@ -51,7 +51,12 @@ function AdminChangePassword() {
         }
         catch (err) {
             console.error(err);
-            toast.error("Something Went Wrong 😒")
+            if(err.response && err.response.data && err.response.data.message) {
+                toast.error(err.response.data.message)
+            }
+            else{
+                toast.error("An error occured while changing the password ")
+            }
         }
         finally {
             setLoading(false)

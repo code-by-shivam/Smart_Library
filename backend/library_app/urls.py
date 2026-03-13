@@ -15,4 +15,6 @@ urlpatterns = [
     path("admin/update-book/<int:id>/",views.update_book),
     path("admin/delete-book/<int:id>/",views.delete_book),
     path("admin/change-password/",views.change_password),
+    path("user/user_signup/",views.user_signup_api),
+    # path("user/user_login/",views.user_login_api),
 ]

@@ -12,6 +12,8 @@ import ManageAuthors from './pages/ManageAuthors'
 import AddBook from './pages/AddBook'
 import ManageBooks from './pages/ManageBooks'
 import AdminChangePassword from './pages/AdminChangePassword'
+import UserSignUp from './pages/UserSignUp'
+import UserLogin from './pages/UserLogin'
 const App = () => {
   return (
     <>
@@ -27,6 +29,8 @@ const App = () => {
       <Route path='/admin/add_Book' element={<AddBook/>}/>
       <Route path='/admin/manage_Book' element={<ManageBooks/>}/>
       <Route path='/admin/change_password' element={<AdminChangePassword/>}/>
+      <Route path='/user/signup' element={<UserSignUp/>}/>
+      <Route path='/user/login' element={<UserLogin/>}/>
     </Routes>
     </>
   )
