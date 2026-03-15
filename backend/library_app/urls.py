@@ -17,4 +17,5 @@ urlpatterns = [
     path("admin/change-password/",views.change_password),
     path("user/user_signup/",views.user_signup_api),
     path("user/user_login/",views.user_login_api),
+    path("user/stats/",views.user_stats_api),
 ]

@@ -443,4 +443,34 @@ def user_login_api(request):
     )
     
 
+@api_view(["GET"])
+def user_stats_api(request):
+    student_id=request.query_params.get("student_id")
+    try:
+        student=Student.objects.get(student_id=student_id)
+    except Student.DoesNotExist:
+        return Response(
+            {
+                "success":False,
+                "message":"Student not found 😒"
+            },
+            status=404
+        )
+    
+    total_books=Book.objects.count()
+    total_issued=IssuedBook.objects.filter(student=student).count()
+    not_returned=IssuedBook.objects.filter(student=student, is_returned=True).count()
+
+    stats={
+        "total_books":total_books,
+        "total_issued":total_issued,
+        "pending_returns":not_returned,
+    }
+    return Response(
+        {
+            "success":True,
+            "stats":stats
+        },
+        status=200
+    )
 
