@@ -165,7 +165,7 @@ function Header() {
                                     </li>
 
                                       <li className="nav-item">
-                                        <Link className={`nav-link ${isActive("/user/my_library")}`} to="/user/my_library">
+                                        <Link className={`nav-link ${isActive("/user/books")}`} to="/user/books">
                                             <i className='fa-solid fa-book-open me-1' />
                                            My Library</Link>
                                     </li>

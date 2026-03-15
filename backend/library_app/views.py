@@ -485,3 +485,86 @@ def user_list_books(request):
         status=200
     )
 
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import Student
+from .serializers import StudentSerializer
+
+
+@api_view(["GET", "PUT"])
+def user_profile_api(request):
+
+    # GET request → query params
+    if request.method == "GET":
+        student_id = request.GET.get("student_id")
+
+    # PUT request → body
+    else:
+        student_id = request.data.get("student_id")
+
+    try:
+        student = Student.objects.get(student_id=student_id)
+
+    except Student.DoesNotExist:
+        return Response(
+            {
+                "success": False,
+                "message": "Student not found 😒"
+            },
+            status=404
+        )
+
+
+    if request.method == "GET":
+
+        serializer = StudentSerializer(student)
+
+        return Response(
+            {
+                "success": True,
+                "student": serializer.data
+            },
+            status=200
+        )
+
+
+    elif request.method == "PUT":
+
+        full_name = request.data.get("full_name")
+        mobile = request.data.get("mobile")
+
+        if not mobile.isdigit() or len(mobile) < 10:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Invalid mobile number 😒"
+                },
+                status=400
+            )
+
+        student.full_name = full_name
+        student.mobile = mobile
+
+        serializer = StudentSerializer(student, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(
+                {
+                    "success": True,
+                    "message": "Profile updated successfully 👍",
+                    "student": serializer.data
+                },
+                status=200
+            )
+
+        return Response(
+            {
+                "success": False,
+                "message": "Failed to update profile 😒",
+                "errors": serializer.errors
+            },
+            status=400
+        )

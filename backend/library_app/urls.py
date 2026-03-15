@@ -19,4 +19,5 @@ urlpatterns = [
     path("user/user_login/",views.user_login_api),
     path("user/stats/",views.user_stats_api),
     path("user/books/",views.user_list_books),
+    path("user/profile/",views.user_profile_api)   
 ]
