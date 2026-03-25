@@ -160,8 +160,8 @@ SECRET_KEY=your-secret-key
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
 CORS_ALLOW_ALL_ORIGINS=True
-CORS_ALLOWED_ORIGINS=https://smartlibrarymanage.netlify.app
-CSRF_TRUSTED_ORIGINS=https://smartlibrarymanage.netlify.app
+CORS_ALLOWED_ORIGINS=
+CSRF_TRUSTED_ORIGINS=
 
 cloud_name=your-cloudinary-cloud-name
 api_key=your-cloudinary-api-key
@@ -179,7 +179,7 @@ npm run dev
 Create a `.env` file in `frontend/`:
 
 ```env
-VITE_API_URL=https://smart-library-s8sn.onrender.com
+VITE_API_URL=
 ```
 
 ## Deployment
