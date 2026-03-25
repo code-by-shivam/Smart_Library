@@ -236,3 +236,5 @@ Built a full-stack Smart Library Management System using Django REST Framework a
 ## Author
 
 Created by Shivam.
+
+*If you are a recruiter, interviewer, or collaborator reviewing this project, this repository reflects my hands-on experience with frontend development, backend APIs, authentication, deployment, and end-to-end product thinking.*
