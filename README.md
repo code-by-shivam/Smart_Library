@@ -160,8 +160,8 @@ SECRET_KEY=your-secret-key
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
 CORS_ALLOW_ALL_ORIGINS=True
-CORS_ALLOWED_ORIGINS=http://localhost:5173
-CSRF_TRUSTED_ORIGINS=http://localhost:5173
+CORS_ALLOWED_ORIGINS=
+CSRF_TRUSTED_ORIGINS=
 
 cloud_name=your-cloudinary-cloud-name
 api_key=your-cloudinary-api-key
@@ -179,7 +179,7 @@ npm run dev
 Create a `.env` file in `frontend/`:
 
 ```env
-VITE_API_URL=http://127.0.0.1:8000
+VITE_API_URL=https://smart-library-s8sn.onrender.com
 ```
 
 ## Deployment
