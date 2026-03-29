@@ -9,15 +9,6 @@ This project is a strong portfolio and placement-ready full-stack application be
 - Frontend: [https://smartlibrarymanage.netlify.app](https://smartlibrarymanage.netlify.app)
 - Backend API: [https://smart-library-s8sn.onrender.com](https://smart-library-s8sn.onrender.com)
 
-## Why This Project Is Good For Placements
-
-- Built as a real end-to-end product, not just isolated CRUD pages
-- Clear separation between backend API and frontend client
-- Uses JWT authentication for secure login flows
-- Supports role-based experiences for admins and students
-- Includes image upload support for book covers
-- Shows practical business logic such as stock tracking, issue/return flow, and student blocking
-- Demonstrates deployment on Netlify and Render
 
 ## Problem Statement
 
@@ -205,33 +196,6 @@ VITE_API_URL=https://smart-library-s8sn.onrender.com
 - Media upload and cloud storage
 - Protected routes
 - Deployment and environment configuration
-
-## Interview Talking Points
-
-If you present this project in a placement or interview, these are strong points to explain:
-
-- Why you used Django REST Framework for backend APIs
-- How you separated admin and student workflows
-- How JWT authentication works in the project
-- How book quantity and availability are managed
-- How issue and return records are tracked
-- How Cloudinary is integrated for image uploads
-- How frontend routes are protected
-- What challenges you faced during deployment and API integration
-
-## Suggested Future Improvements
-
-- Add automated tests for backend and frontend
-- Add refresh-token based silent re-authentication
-- Add fine calculation based on overdue days
-- Add email notifications for due dates
-- Add reporting and export features
-- Add stronger role and permission validation
-- Improve mobile responsiveness further
-
-## Resume-Friendly Project Summary
-
-Built a full-stack Smart Library Management System using Django REST Framework and React with JWT-based authentication, role-based admin and student workflows, Cloudinary image uploads, search, filtering, pagination, dashboard analytics, and deployed frontend/backend architecture on Netlify and Render.
 
 ## Author
 
