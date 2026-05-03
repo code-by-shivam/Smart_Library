@@ -183,7 +183,7 @@ VITE_API_URL=https://smart-library-s8sn.onrender.com
 ### Backend
 
 - Hosted on Render
-- Live URL: [https://smart-library-s8sn.onrender.com](https://smart-library-s8sn.onrender.com)
+- Live URL: [https://smart-library-s8sn.onrender.com](https://smart-library-1-s4xi.onrender.com/)
 
 ## Key Full-Stack Concepts Demonstrated
 
