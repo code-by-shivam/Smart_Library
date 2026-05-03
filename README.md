@@ -178,7 +178,7 @@ VITE_API_URL=https://smart-library-s8sn.onrender.com
 ### Frontend
 
 - Hosted on Netlify
-- Live URL: [https://smartlibrarymanage.netlify.app](https://smartlibrarymanage.netlify.app)
+- Live URL: [https://smartlibrarymanage.netlify.app](https://mysmartlibrary1.netlify.app/)
 
 ### Backend
 
