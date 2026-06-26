@@ -174,7 +174,7 @@ function StudentProfile() {
                                         <button
                                             type='button'
                                             className='border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2 rounded transition-colors'
-                                            onClick={() => navigate("/user/dashboard")}
+                                            onClick={() => navigate("/student/dashboard")}
                                         >
                                             <i className='fa-solid fa-arrow-left mr-2'></i>
                                             Back
